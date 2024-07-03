@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm danh mục</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Thêm danh mục mới</h1>
+    <form th:action="@{/categories/create}" method="post">
+        <div class="form-group">
+            <label for="name">Tên danh mục</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+    <a th:href="@{/categories}">Back to Category</a>
+</div>
+</body>
+</html>

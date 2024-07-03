@@ -24,41 +24,40 @@ import java.util.Optional;
 public class FoodService {
     private final IFoodRepository foodRepository;
     private final ICategoryRepository categoryRepository;
-    public List<Food> getAllBooks() {
+    public List<Food> getAllFoods() {
         return foodRepository.findAll();
     }
-    public List<Food> getAllBooks(Integer pageNo,
+    public List<Food> getAllFoods(Integer pageNo,
                                   Integer pageSize,
                                   String sortBy) {
         return foodRepository.findAllFoods(pageNo, pageSize, sortBy);
     }
-    public Optional<Food> getBookById(Long id) {
+    public Optional<Food> getFoodById(Long id) {
         return foodRepository.findById(id);
     }
-    public void addBook(Food book) {
-        foodRepository.save(book);
+    public void addFood(Food Food) {
+        foodRepository.save(Food);
     }
-    public void updateBook(@NotNull Food book) {
-        Food existingBook = foodRepository.findById(book.getId())
-                .orElse(null);
-        Objects.requireNonNull(existingBook).setName(book.getName());
-        existingBook.setImage_url(book.getImage_url());
-        existingBook.setPrice(book.getPrice());
-        existingBook.setCategory(book.getCategory());
+    public void updateFood(@NotNull Food food) {
+        Food existingBook = foodRepository.findById(food.getId()).orElse(null);
+        Objects.requireNonNull(existingBook).setName(food.getName());
+        existingBook.setImage_url(food.getImage_url());
+        existingBook.setPrice(food.getPrice());
+        existingBook.setCategory(food.getCategory());
         foodRepository.save(existingBook);}
 
-    public void deleteBookById(Long id) {
+    public void deleteFoodById(Long id) {
         foodRepository.deleteById(id);
 
     }
     public List<Food> searchByName(Integer pageNo,
-                                            Integer pageSize,
-                                            String sortBy,
-                                            String keyword) {
+                                   Integer pageSize,
+                                   String sortBy,
+                                   String keyword) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         return foodRepository.searchFood(keyword, pageable);
     }
-    public List<Food> getAllBooksSorted(Integer pageNo,
+    public List<Food> getAllFoodsSorted(Integer pageNo,
                                         Integer pageSize,
                                         String sortBy) {
         // Check if sortBy is valid, otherwise default to "id"
@@ -67,7 +66,7 @@ public class FoodService {
         }
         return foodRepository.findAllFoods(pageNo, pageSize, sortBy);
     }
-    public List<Food> searchBook2(String keyword) {
+    public List<Food> searchFood2(String keyword) {
         return foodRepository.searchFood2(keyword);
     }
 

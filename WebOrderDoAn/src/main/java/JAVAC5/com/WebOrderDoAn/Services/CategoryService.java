@@ -1,8 +1,8 @@
 package JAVAC5.com.WebOrderDoAn.Services;
 
-import Tuan2.TranTanPhat.Entities.Category;
-import Tuan2.TranTanPhat.Repositories.IBookRepository;
-import Tuan2.TranTanPhat.Repositories.ICategoryRepository;
+import JAVAC5.com.WebOrderDoAn.Entities.Category;
+import JAVAC5.com.WebOrderDoAn.Repositories.IFoodRepository;
+import JAVAC5.com.WebOrderDoAn.Repositories.ICategoryRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class CategoryService {
     private final ICategoryRepository categoryRepository;
-    private final IBookRepository bookRepository;
+    private final IFoodRepository foodRepository;
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
@@ -38,7 +38,7 @@ public class CategoryService {
     }
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = {Exception.class, Throwable.class})
     public void deleteCategoryById(Long categoryId) throws Exception {
-        if (bookRepository.countByCategoryId(categoryId) > 0) {
+        if (foodRepository.countByCategoryId(categoryId) > 0) {
             throw new Exception("Category cannot be deleted as there are books associated with it.");
         }
         categoryRepository.deleteById(categoryId);
