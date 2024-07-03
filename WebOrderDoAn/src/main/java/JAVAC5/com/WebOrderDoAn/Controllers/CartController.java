@@ -23,7 +23,7 @@ public class CartController {
                 cartService.getSumPrice(session));
         model.addAttribute("totalQuantity",
                 cartService.getSumQuantity(session));
-        return "book/cart";
+        return "Food/cart";
     }
     @GetMapping("/removeFromCart/{id}")
     public String removeFromCart(HttpSession session,
@@ -38,7 +38,7 @@ public class CartController {
                              @PathVariable int quantity) {
         var cart = cartService.getCart(session);
         cart.updateItems(id, quantity);
-        return "Book/cart";
+        return "Food/cart";
     }
     @GetMapping("/clearCart")
     public String clearCart(HttpSession session) {
