@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout :: link-css}"></th:block>
     <th:block th:replace="~{layout::custom-css}"></th:block>
 </head>
 <body style="background: #f6f7fc;">
@@ -15,9 +15,12 @@
         <div class="col-12 col-lg-6 col-md-8 col-xl-5">
             <div class="card shadow" style="border-radius: 1rem;">
                 <div class="card-body p-5 text-center">
-                    <h3>Login to <strong>Bookstore</strong></h3>
-                    <p class="mb-4 text-secondary">Enter your username and password to access your account.</p>
-                    <a href="/oauth2/authorization/google"  class="btn btn-outline-danger btn-floating m-1"  role="button">
+                    <h3>Login to <strong>WebOrderFood</strong></h3>
+                    <p class="mb-4 text-secondary">Enter your username
+                        and password to access your account.</p>
+                    <a href="/oauth2/authorization/google"
+                       class="btn btn-outline-danger btn-floating m-1"
+                       role="button">
                         Login with Google
                     </a>
                     <hr class="my-4">

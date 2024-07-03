@@ -1,6 +1,6 @@
 package JAVAC5.com.WebOrderDoAn.utils;
 
-import JAVAC5.com.WebOrderDoAn.Services.OAuthService;
+//import JAVAC5.com.WebOrderDoAn.Services.OAuthService;
 import JAVAC5.com.WebOrderDoAn.Services.UserService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final OAuthService oAuthService;
+//    private final OAuthService oAuthService;
     private final UserService userService;
 
     @Bean
@@ -47,7 +47,7 @@ public class SecurityConfig {
                 csrf -> csrf.ignoringRequestMatchers("/api/v1/books/**")
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/",
+                        .requestMatchers("/css/**", "/js/**", "/Home",
                                 "/oauth/**", "/register", "/error")
                         .permitAll()
 
@@ -65,23 +65,25 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/")
                         .failureUrl("/login?error")
                         .permitAll()
-                ).oauth2Login(
-                        oauth2Login -> oauth2Login.loginPage("/login")
-                                .failureUrl("/login?error")
-                                .userInfoEndpoint(userInfoEndpoint ->
-                                        userInfoEndpoint
-                                                .userService(oAuthService)
-                                )
-                                .successHandler(
-                                        (request, response,
-                                         authentication) -> {
-                                            var oidcUser =(DefaultOidcUser) authentication.getPrincipal();
-                                            userService.saveOauthUser(oidcUser.getEmail(), oidcUser.getName());
-                                            response.sendRedirect("/");
-                                        }
-                                )
-                                .permitAll()
-                ).rememberMe(rememberMe -> rememberMe
+                )
+//                .oauth2Login(
+//                        oauth2Login -> oauth2Login.loginPage("/login")
+//                                .failureUrl("/login?error")
+//                                .userInfoEndpoint(userInfoEndpoint ->
+//                                        userInfoEndpoint
+//                                                .userService(oAuthService)
+//                                )
+//                                .successHandler(
+//                                        (request, response,
+//                                         authentication) -> {
+//                                            var oidcUser =(DefaultOidcUser) authentication.getPrincipal();
+//                                            userService.saveOauthUser(oidcUser.getEmail(), oidcUser.getName());
+//                                            response.sendRedirect("/");
+//                                        }
+//                                )
+//                                .permitAll()
+//                )
+                .rememberMe(rememberMe -> rememberMe
                         .key("hutech")
                         .rememberMeCookieName("hutech")
                         .tokenValiditySeconds(24 * 60 * 60)

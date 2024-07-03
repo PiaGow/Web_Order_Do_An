@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ỨNG DỤNG QUẢN LÝ SÁCH</title>
+    <title>TRANG WEB BÁN ĐỒ ĂN</title>
     <th:block th:replace="~{layout::link-css}"></th:block>
     <th:block th:replace="~{layout::custom-css}"></th:block>
 </head>
@@ -13,11 +13,16 @@
 <div class="container">
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <p class="navbar-brand" >
                 TRANG CHỦ WEB BÁN ĐỒ ĂN
-            </a>
+            </p>
         </div>
     </nav>
+</div>
+<div class="container" sec:authorize="isAuthenticated()">
+    <span class="card-group">
+        <span>Welcome, <span th:text="${username}">User</span>!</span>
+    </span>
 </div>
 <th:block th:replace="~{layout::footer}"></th:block>
 </body>

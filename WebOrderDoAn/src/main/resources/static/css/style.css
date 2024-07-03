@@ -1,11 +1,28 @@
 nav{
- text-align: center;
+
+    text-align: center;
 }
 .pagination{
- display: inline-block;
+    display: inline-block;
 }
 .footer {
- position: fixed;
- bottom: 0;
- width: 100%;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.ul_me {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.left {
+    display: flex;
+}
+.left li {
+    margin-right: 10px;
+}
+.right {
+    margin-left: auto; /* Đẩy phần tử bên phải */
 }
