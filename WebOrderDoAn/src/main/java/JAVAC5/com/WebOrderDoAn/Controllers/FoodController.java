@@ -37,14 +37,14 @@ public class FoodController {
                 foodService.getAllFoods(pageNo, pageSize, sortBy).size() / pageSize);
         model.addAttribute("categories",
                 categoryService.getAllCategories());
-        return "food/list";
+        return "Food/list";
     }
     @GetMapping("/add")
     public String addFoodForm(@NotNull Model model) {
         model.addAttribute("food", new Food());
         model.addAttribute("categories",
                 categoryService.getAllCategories());
-        return "food/add";
+        return "Food/add";
     }
     @PostMapping("/add")
     public String addFood(
@@ -58,7 +58,7 @@ public class FoodController {
             model.addAttribute("errors", errors);
             model.addAttribute("categories",
                     categoryService.getAllCategories());
-            return "food/add";
+            return "Food/add";
         }
         foodService.addFood(food);
         return "redirect:/foods";
@@ -73,7 +73,7 @@ public class FoodController {
         var cart = cartService.getCart(session);
         cart.addItems(new CartItem(id, name, price, quantity));
         cartService.updateCart(session, cart);
-        return "redirect:/books";
+        return "redirect:/foods";
     }
     @GetMapping("/delete/{id}")
     public String deleteFood(@PathVariable long id) {
@@ -81,7 +81,7 @@ public class FoodController {
                 .ifPresentOrElse(
                         food -> foodService.deleteFoodById(id),
                         () -> { throw new IllegalArgumentException("Book not found"); });
-        return "redirect:/books";
+        return "redirect:/foods";
     }
     @GetMapping("/edit/{id}")
     public String editFoodForm(@NotNull Model model, @PathVariable long id)
@@ -91,7 +91,7 @@ public class FoodController {
                 IllegalArgumentException("Food not found")));
         model.addAttribute("categories",
                 categoryService.getAllCategories());
-        return "food/edit";
+        return "Food/edit";
     }
     @PostMapping("/edit")
     public String editFood(@Valid @ModelAttribute("food") Food food,
@@ -105,7 +105,7 @@ public class FoodController {
             model.addAttribute("errors", errors);
             model.addAttribute("categories",
                     categoryService.getAllCategories());
-            return "food/edit";
+            return "Food/edit";
         }
         foodService.updateFood(food);
         return "redirect:/foods";
@@ -125,7 +125,7 @@ public class FoodController {
                         .size() / pageSize);
         model.addAttribute("categories",
                 categoryService.getAllCategories());
-        return "food/list";
+        return "Food/list";
     }
 
 //    @GetMapping("/api")
