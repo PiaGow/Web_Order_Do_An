@@ -10,9 +10,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,17 +23,6 @@ public class FoodController {
     private final CategoryService categoryService;
     private final CartService cartService;
 
-    @GetMapping("/menu")
-    public String showMenu(@AuthenticationPrincipal User user, @AuthenticationPrincipal OAuth2User oidcUserService, Model model) {
-        if(user != null) {
-            model.addAttribute("username", user.getUsername());
-        }
-        else if(oidcUserService != null) {
-            model.addAttribute("username", oidcUserService.getName());
-        }
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "Food/menu";
-    }
     @GetMapping
     public String showAllFoods(@NotNull Model model,
                                @RequestParam(defaultValue = "0")
