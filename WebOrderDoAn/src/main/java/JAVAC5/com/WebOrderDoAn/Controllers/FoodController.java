@@ -39,13 +39,14 @@ public class FoodController {
                 categoryService.getAllCategories());
         return "Food/list";
     }
+
     @GetMapping("/add")
     public String addFoodForm(@NotNull Model model) {
         model.addAttribute("food", new Food());
-        model.addAttribute("categories",
-                categoryService.getAllCategories());
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "Food/add";
     }
+
     @PostMapping("/add")
     public String addFood(
             @Valid @ModelAttribute("food") Food food,
@@ -63,6 +64,7 @@ public class FoodController {
         foodService.addFood(food);
         return "redirect:/foods";
     }
+
     @PostMapping("/add-to-cart")
     public String addToCart(HttpSession session,
                             @RequestParam long id,
@@ -75,17 +77,20 @@ public class FoodController {
         cartService.updateCart(session, cart);
         return "redirect:/foods";
     }
+
     @GetMapping("/delete/{id}")
     public String deleteFood(@PathVariable long id) {
         foodService.getFoodById(id)
                 .ifPresentOrElse(
                         food -> foodService.deleteFoodById(id),
-                        () -> { throw new IllegalArgumentException("Book not found"); });
+                        () -> {
+                            throw new IllegalArgumentException("Book not found");
+                        });
         return "redirect:/foods";
     }
+
     @GetMapping("/edit/{id}")
-    public String editFoodForm(@NotNull Model model, @PathVariable long id)
-    {
+    public String editFoodForm(@NotNull Model model, @PathVariable long id) {
         var food = foodService.getFoodById(id);
         model.addAttribute("food", food.orElseThrow(() -> new
                 IllegalArgumentException("Food not found")));
@@ -93,6 +98,7 @@ public class FoodController {
                 categoryService.getAllCategories());
         return "Food/edit";
     }
+
     @PostMapping("/edit")
     public String editFood(@Valid @ModelAttribute("food") Food food,
                            @NotNull BindingResult bindingResult,
@@ -110,6 +116,7 @@ public class FoodController {
         foodService.updateFood(food);
         return "redirect:/foods";
     }
+
     @GetMapping("/search")
     public String searchFood(
             @NotNull Model model,
@@ -128,14 +135,4 @@ public class FoodController {
         return "Food/list";
     }
 
-//    @GetMapping("/api")
-//    public String showApiBook(){
-//
-//        return "book/api";
-//    }
-//    @GetMapping("/add_api")
-//    public String addApiBook(){
-//
-//        return "book/add_api";
-//    }
 }
