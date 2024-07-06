@@ -70,8 +70,7 @@ public class FoodController {
                             @RequestParam long id,
                             @RequestParam String name,
                             @RequestParam double price,
-                            @RequestParam(defaultValue = "1") int
-                                    quantity) {
+                            @RequestParam(defaultValue = "1") int quantity) {
         var cart = cartService.getCart(session);
         cart.addItems(new CartItem(id, name, price, quantity));
         cartService.updateCart(session, cart);

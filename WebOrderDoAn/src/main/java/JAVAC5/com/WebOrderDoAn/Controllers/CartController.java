@@ -26,19 +26,16 @@ public class CartController {
         return "food/cart";
     }
     @GetMapping("/removeFromCart/{id}")
-    public String removeFromCart(HttpSession session,
-                                 @PathVariable Long id) {
+    public String removeFromCart(HttpSession session, @PathVariable Long id) {
         var cart = cartService.getCart(session);
         cart.removeItems(id);
         return "redirect:/cart";
     }
     @GetMapping("/updateCart/{id}/{quantity}")
-    public String updateCart(HttpSession session,
-                             @PathVariable Long id,
-                             @PathVariable int quantity) {
+    public String updateCart(HttpSession session, @PathVariable Long id, @PathVariable int quantity) {
         var cart = cartService.getCart(session);
         cart.updateItems(id, quantity);
-        return "Food/cart";
+        return "food/cart";
     }
     @GetMapping("/clearCart")
     public String clearCart(HttpSession session) {
