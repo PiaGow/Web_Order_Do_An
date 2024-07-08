@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Thêm danh mục</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+    <!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->
 </head>
 <body>
+<th:block th:replace="~{layout::header}"></th:block>
 <div class="container">
     <h1>Thêm danh mục mới</h1>
     <form th:action="@{/categories/create}" method="post">
@@ -17,5 +20,6 @@
     </form>
     <a th:href="@{/categories}">Back to Category</a>
 </div>
+<th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>

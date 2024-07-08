@@ -21,7 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-//    private final OAuthService oAuthService;
+    //    private final OAuthService oAuthService;
     private final UserService userService;
 
     @Bean
@@ -44,7 +44,7 @@ public class SecurityConfig {
                                                    HttpSecurity http) throws Exception {
         return http
                 .csrf(
-                csrf -> csrf.ignoringRequestMatchers("/api/v1/books/**")
+                        csrf -> csrf.ignoringRequestMatchers("/api/v1/books/**")
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/Home",

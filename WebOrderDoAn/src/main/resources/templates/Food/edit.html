@@ -12,17 +12,13 @@
 <th:block th:replace="~{layout::header}"></th:block>
 <div class="container">
     <h1>Edit Book</h1>
-    <form th:action="@{/books/saveEditBook}"  th:object="${book}" enctype="multipart/form-data"  method="POST" >
+    <form th:action="@{/foods/edit}"  th:object="${food}" enctype="multipart/form-data"  method="POST" >
         <input type="hidden" th:field="*{id}">
+
         <div class="col-6 mb-3">
-            <label class="form-label" for="title">Title:</label>
-            <input class="form-control" type="text" th:field="*{title}"
-                   id="title">
-        </div>
-        <div class="col-6 mb-3">
-            <label class="form-label" for="author">Author:</label>
-            <input class="form-control" type="text" th:field="*{author}"
-                   id="author">
+            <label class="form-label" for="name">Name:</label>
+            <input class="form-control" type="text" th:field="*{name}"
+                   id="name">
         </div>
         <div class="col-6 mb-3">
             <label class="form-label" for="price">Price:</label>
@@ -37,12 +33,14 @@
         </div>
         <div class="col-6 mb-3">
             <label class="form-label" for="image_url">Book Image:</label>
-            <input class="form-control" type="url" name="image_url" th:field="*{image_url}" id="image_url">
+            <input class="form-control" type="file" name="image">
+            <input type="hidden" th:field="*{image_url}">
+            <input class="form-control" type="image" disabled="disabled" th:src="*{image_url}" alt="" id="image_url">
         </div>
         <input class="btn btn-success" type="submit" value="Save">
     </form>
     <br>
-    <a class="btn btn-primary" th:href="@{/books}">Back to List</a>
+    <a class="btn btn-primary" th:href="@{/foods}">Back to List</a>
 </div>
 <th:block th:replace="~{layout::footer}"></th:block>
 </body>

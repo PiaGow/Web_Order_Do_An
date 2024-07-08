@@ -6,9 +6,10 @@ $(document).ready(function () {
         $.ajax({
             url: '/cart/updateCart/' + id + '/' + quantity,
             type: 'get',
-            success: function () {
-                location.reload();
-            }
+//            success: function () {
+//
+//            }
         });
+        location.reload();
     });
 });

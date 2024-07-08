@@ -20,8 +20,8 @@ public interface IFoodRepository extends PagingAndSortingRepository<Food, Long>,
     """)
     List<Food> searchFood(@Param("keyword") String keyword, Pageable pageable);
     default List<Food> findAllFoods(Integer pageNo,
-            Integer pageSize,
-            String sortBy) {
+                                    Integer pageSize,
+                                    String sortBy) {
         return findAll(PageRequest.of(pageNo,
                 pageSize,
                 Sort.by(sortBy)))
