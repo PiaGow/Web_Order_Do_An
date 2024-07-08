@@ -88,8 +88,7 @@ public class FoodController {
                             @RequestParam long id,
                             @RequestParam String name,
                             @RequestParam double price,
-                            @RequestParam(defaultValue = "1") int
-                                    quantity) {
+                            @RequestParam(defaultValue = "1") int quantity) {
         var cart = cartService.getCart(session);
         cart.addItems(new CartItem(id, name, price, quantity));
         cartService.updateCart(session, cart);
@@ -101,17 +100,17 @@ public class FoodController {
         foodService.getFoodById(id)
                 .ifPresentOrElse(
                         food ->
-                            {
-                                if (food.getImage_url() != null && !food.getImage_url().isEmpty()) {
-                                    Path oldFilePath = Paths.get("src/main/resources/static" + food.getImage_url());
-                                    try {
-                                        Files.deleteIfExists(oldFilePath);
-                                    } catch (IOException e) {
-                                        throw new RuntimeException("Failed to delete image file", e);
-                                    }
+                        {
+                            if (food.getImage_url() != null && !food.getImage_url().isEmpty()) {
+                                Path oldFilePath = Paths.get("src/main/resources/static" + food.getImage_url());
+                                try {
+                                    Files.deleteIfExists(oldFilePath);
+                                } catch (IOException e) {
+                                    throw new RuntimeException("Failed to delete image file", e);
                                 }
-                                foodService.deleteFoodById(id);
-                            },
+                            }
+                            foodService.deleteFoodById(id);
+                        },
                         () -> {
                             throw new IllegalArgumentException("Food not found");
                         });
