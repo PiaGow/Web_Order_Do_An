@@ -1,0 +1,24 @@
+<!-- foodListFragment.html -->
+<div th:fragment="foodList">
+    <div class="row">
+        <div th:each="food : ${foods}" class="col-sm-6 col-lg-4">
+            <div class="box">
+                <div>
+                    <div class="img-box">
+                        <img th:src="@{'/img/' + ${food.image_url}}" alt="Food Image">
+                    </div>
+                    <div class="detail-box">
+                        <h5 th:text="${food.name}">Food Name</h5>
+                        <p th:text="${food.description}">Food Description</p>
+                        <div class="options">
+                            <h6 th:text="'$' + ${food.price}">Price</h6>
+                            <a href="#">
+                                <!-- Link or button for more details -->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

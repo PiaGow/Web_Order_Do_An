@@ -1,21 +1,29 @@
 package JAVAC5.com.WebOrderDoAn.Controllers;
 import JAVAC5.com.WebOrderDoAn.Entities.Category;
+import JAVAC5.com.WebOrderDoAn.Entities.Food;
 import JAVAC5.com.WebOrderDoAn.Services.CategoryService;
+import JAVAC5.com.WebOrderDoAn.Services.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/categories")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-
-    @GetMapping("")
+    private FoodService foodService;
+    @GetMapping("/categories")
     public String listCategories(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "categories/list";
+        List<Category> categories = categoryService.getAllCategories();
+        List<Food> foods = foodService.getAllFoods();
+        model.addAttribute("categories", categories);
+        model.addAttribute("foods", foods);
+        return "categories";
     }
 
     @GetMapping("/create")
@@ -52,4 +60,27 @@ public class CategoryController {
         categoryService.deleteCategoryById(id);
         return "redirect:/categories";
     }
+    @GetMapping("/byCategory/{categoryId}")
+    public String getFoodsByCategory(@PathVariable Long categoryId, Model model) {
+        Category category = categoryService.getCategoryById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + categoryId));
+        List<Food> foods = foodService.getFoodsByCategoryId(categoryId);
+        model.addAttribute("category", category);
+        model.addAttribute("foods", foods);
+        return "foodList"; // Thay thế bằng tên template của bạn
+    }
+    @GetMapping("/by-category/{categoryId}")
+    @ResponseBody
+    public ResponseEntity<List<Food>> getFoodsByCategory(@PathVariable Long categoryId) {
+        List<Food> foods = foodService.getFoodsByCategoryId(categoryId);
+        return ResponseEntity.ok(foods);
+    }
+
+    @ModelAttribute("categories")
+    public List<Category> categories() {
+        return categoryService.getAllCategories();
+    }
+
+
+
 }

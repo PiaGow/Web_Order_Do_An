@@ -1,5 +1,6 @@
 package JAVAC5.com.WebOrderDoAn.Controllers;
 
+import JAVAC5.com.WebOrderDoAn.Entities.Category;
 import JAVAC5.com.WebOrderDoAn.Entities.Food;
 import JAVAC5.com.WebOrderDoAn.RegexFileName.StringUtils;
 import JAVAC5.com.WebOrderDoAn.Services.CartService;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Controller
 @RequestMapping("/foods")
@@ -200,6 +202,18 @@ public class FoodController {
         model.addAttribute("categories",
                 categoryService.getAllCategories());
         return "Food/list";
+    }
+
+    @GetMapping("/foods/category/{id}")
+    public String listFoodsByCategory(@PathVariable Long id, Model model) {
+        List<Food> foods;
+        if (id == null || id == 0) {
+            foods = foodService.getFirst9FoodsOrderedByIdAsc();
+        } else {
+            foods = foodService.getFoodsByCategoryId(id);
+        }
+        model.addAttribute("foods", foods);
+        return "fragments/foodList :: foodList"; // Ensure fragment name matches HTML
     }
 
 }

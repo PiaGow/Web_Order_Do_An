@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+<div class="container">
+    <div class="heading_container heading_center">
+        <h2>Our Menu</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group">
+                <li th:each="category : ${categories}" class="list-group-item">
+                    <a th:href="@{'/menu/' + ${category.id}}" th:text="${category.name}">Category Name</a>
+                </li>
+            </ul>
+        </div>
+        <div id="foodListContainer" class="col-md-9">
+            <!-- Placeholder for food list -->
+            <div class="row">
+                <div th:fragment="foodList">
+                    <div th:each="food : ${foods}" class="col-sm-6 col-lg-4">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img th:src="@{'/img/' + ${food.image_url}}" alt="Food Image">
+                                </div>
+                                <div class="detail-box">
+                                    <h5 th:text="${food.name}">Food Name</h5>
+                                    <p th:text="${food.description}">Food Description</p>
+                                    <div class="options">
+                                        <h6 th:text="'$' + ${food.price}">Price</h6>
+                                        <a href="#">
+                                            <!-- Link or button for more details -->
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('.list-group-item a').click(function (event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    $('#foodListContainer').html($(data).find('#foodListContainer').html());
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
