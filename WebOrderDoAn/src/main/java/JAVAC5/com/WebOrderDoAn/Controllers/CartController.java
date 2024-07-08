@@ -23,7 +23,7 @@ public class CartController {
                 cartService.getSumPrice(session));
         model.addAttribute("totalQuantity",
                 cartService.getSumQuantity(session));
-        return "food/cart";
+        return "Food/cart";
     }
     @GetMapping("/removeFromCart/{id}")
     public String removeFromCart(HttpSession session,

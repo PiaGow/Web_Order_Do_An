@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 public class CartItem {
     private Long foodId;
-    private String bookName;
+    private String foodName;
     private Double price;
     private int quantity;
 }

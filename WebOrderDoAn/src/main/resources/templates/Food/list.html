@@ -31,8 +31,7 @@
         <thead>
         <tr>
             <th><a th:href="@{/foods/search(keyword=${keyword}, sortBy='id')}">Id</a></th>
-            <th><a th:href="@{/foods/search(keyword=${keyword}, sortBy='title')}">Title</a></th>
-            <th><a th:href="@{/foods/search(keyword=${keyword}, sortBy='author')}">Author</a></th>
+            <th><a th:href="@{/foods/search(keyword=${keyword}, sortBy='author')}">Name</a></th>
             <th><a th:href="@{/foods/search(keyword=${keyword}, sortBy='price')}">Price</a></th>
             <th>Image</th>
             <th><a th:href="@{/foods/search(keyword=${keyword}, sortBy='category')}">Category</a></th>
@@ -45,7 +44,7 @@
             <td th:text="${food.getName()}"></td>
             <td th:text="${food.getPrice()}"></td>
             <td>
-                <img th:src="${food.getImage_url()}" style="width:120px;height: 120px; "/>
+                <img th:src="@{${food.getImage_url()}}" style="width:120px;height: 120px; "/>
             </td>
             <td th:text="${food.getCategory().getName()}"></td>
             <td colspan="2">
