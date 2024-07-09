@@ -28,10 +28,6 @@ public class Food {
     @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters")
     @NotBlank(message = "Name must not be blank")
     private String name;
-//    @Column(name = "author", length = 50, nullable = false)
-//    @Size(min = 1,max = 50, message = "Author must be between 1 and 50 characters")
-//    @NotBlank(message = "Author must not be blank")
-//    private String author;
     @Column(name = "price")
     @Positive(message = "Price must be greater than 0")
     private Double price;

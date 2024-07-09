@@ -1,5 +1,6 @@
 package JAVAC5.com.WebOrderDoAn.Services;
 
+import JAVAC5.com.WebOrderDoAn.Entities.Category;
 import JAVAC5.com.WebOrderDoAn.Entities.Food;
 import JAVAC5.com.WebOrderDoAn.Repositories.ICategoryRepository;
 import JAVAC5.com.WebOrderDoAn.Repositories.IFoodRepository;
@@ -78,5 +79,8 @@ public class FoodService {
     }
     public List<Food> getFirstNineFoodsOrderedById(Pageable pageable) {
         return foodRepository.findFirst9ByOrderByIdAsc(pageable);
+    }
+    public List<Food> findByCategory(Category category) {
+        return foodRepository.findByCategory(category);
     }
 }

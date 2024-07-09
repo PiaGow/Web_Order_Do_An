@@ -1,5 +1,6 @@
 package JAVAC5.com.WebOrderDoAn.Repositories;
 
+import JAVAC5.com.WebOrderDoAn.Entities.Category;
 import JAVAC5.com.WebOrderDoAn.Entities.Food;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,5 +47,7 @@ public interface IFoodRepository extends PagingAndSortingRepository<Food, Long>,
 
     List<Food> findFirst9ByOrderByIdAsc();
     List<Food> findFirst9ByOrderByIdAsc(Pageable pageable);
-    Page<Food> findByCategoryId(Long categoryId, Pageable pageable);
+    List<Food> findByCategoryId(Long categoryId);
+    List<Food> findByCategory(Category category);
+
 }

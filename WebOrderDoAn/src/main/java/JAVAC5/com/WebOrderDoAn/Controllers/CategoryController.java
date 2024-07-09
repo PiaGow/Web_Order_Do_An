@@ -17,7 +17,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
     private FoodService foodService;
-    @GetMapping("/categories")
+    @GetMapping
     public String listCategories(Model model) {
         List<Category> categories = categoryService.getAllCategories();
         List<Food> foods = foodService.getAllFoods();
@@ -76,10 +76,6 @@ public class CategoryController {
         return ResponseEntity.ok(foods);
     }
 
-    @ModelAttribute("categories")
-    public List<Category> categories() {
-        return categoryService.getAllCategories();
-    }
 
 
 
