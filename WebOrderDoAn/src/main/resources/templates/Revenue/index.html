@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Revenue</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .chart-container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center">Monthly Revenue</h2>
+    <div class="chart-container">
+        <canvas id="revenueChart" width="800" height="400"></canvas>
+    </div>
+</div>
+
+<!-- Bootstrap Modal for Revenue Details -->
+<div class="modal fade" id="revenueModal" tabindex="-1" role="dialog" aria-labelledby="revenueModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="revenueModalLabel">Monthly Revenue Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Month: <span id="modalMonth"></span></p>
+                <p>Revenue: <span id="modalRevenue"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+<script th:inline="javascript">
+    /*[[${months}]]*/
+    /*[[${revenues}]]*/
+
+    var months = /*[[${months}]]*/ [];
+    var revenues = /*[[${revenues}]]*/ [];
+
+    var ctx = document.getElementById('revenueChart').getContext('2d');
+    var revenueChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Monthly Revenue',
+                data: revenues,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Function to show revenue details modal
+    function showRevenueModal(month, revenue) {
+        $('#modalMonth').text(month);
+        $('#modalRevenue').text(revenue.toFixed(2)); // Format revenue as needed
+        $('#revenueModal').modal('show');
+    }
+
+    // Add click event listener to chart bars
+    document.getElementById('revenueChart').onclick = function(evt) {
+        var activePoint = revenueChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, false)[0];
+        if (activePoint) {
+            var month = revenueChart.data.labels[activePoint.index];
+            var revenue = revenueChart.data.datasets[activePoint.datasetIndex].data[activePoint.index];
+            showRevenueModal(month, revenue);
+        }
+    };
+</script>
+</body>
+</html>
