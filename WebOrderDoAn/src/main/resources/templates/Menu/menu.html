@@ -54,13 +54,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="">About</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Book Table</a>
-                    </li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/foods/add">Add Food</a></li>
+                    <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/revenue/index">Revenue</a></li>
                 </ul>
                 <div class="user_option">
 
-                    <a class="cart_link" href="/cart">
+                    <a class="cart_link" href="cart">
                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                   <g>
                     <g>
@@ -115,7 +114,7 @@
                 </svg>
                     </a>
 
-                    <a href="/menu" class="order_online">
+                    <a href="/menu/menu" class="order_online">
                         Order Online
                     </a>
                 </div>
@@ -133,8 +132,8 @@
         <div th:replace="Menu/index"></div>
 
         <div class="btn-box">
-            <a href="">
-                View More
+            <a href="/menu/menu">
+                Back To List
             </a>
         </div>
     </div>

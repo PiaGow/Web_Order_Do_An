@@ -4,6 +4,15 @@
         <img th:src="@{${food.image_url}}" alt="Food Image"/>
         <p th:text="${food.name}">Food Name</p>
         <p th:text="${food.price}">Price</p>
+        <form th:action="@{/menu/add-to-cart}" method="post" class="d-inline">
+            <input type="hidden" name="id" th:value="${food.getId()}">
+            <input type="hidden" name="name"
+                   th:value="${food.getName()}">
+            <input type="hidden" name="price"
+                   th:value="${food.getPrice()}">
+            <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to add this food to cart?')">
+                Add to cart</button>
+        </form>
 
     </div>
 </div>
