@@ -35,10 +35,8 @@ public class MenuController {
 
     @GetMapping("/menu/category/{id}")
     public String showFoodsByCategory(@PathVariable("id") Long id, Model model) {
-        List<Category> categories = categoryRepository.findAll();
         Category category = categoryRepository.findById(id).orElse(null);
         List<Food> foods = foodRepository.findByCategoryId(id);
-        model.addAttribute("categories", categories);
         model.addAttribute("foods", foods);
         model.addAttribute("selectedCategory", category);
         return "Menu/index";

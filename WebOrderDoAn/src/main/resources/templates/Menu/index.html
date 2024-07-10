@@ -2,19 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Food Menu</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>Food Menu</h1>
-<ul>
+<ul class="filters_menu">
+    <!-- Button "All" will be added only once -->
+    <li th:if="${true}">
+        <a href="#" class="active" th:text="'All'" th:href="@{/menu}"></a>
+    </li>
+    <!-- Iterate through categories -->
     <li th:each="category : ${categories}">
-        <a th:href="@{/menu/category/{id}(id=${category.id})}" th:text="${category.name}"></a>
+        <!-- Skip the first category for button "All" -->
+        <a th:if="${category.id != null}" th:href="@{/menu/category/{id}(id=${category.id})}" th:text="${category.name}"></a>
     </li>
 </ul>
 
 <div id="food-list">
-    <div th:replace="Menu/foodListContainer :: fragment"></div>
+    <div th:replace="Menu/foodListContainer"></div>
 </div>
 
 <script th:src="@{/js/scripts.js}"></script>

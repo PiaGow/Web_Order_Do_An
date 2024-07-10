@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Food List</title>
-</head>
-<body>
-<div th:fragment="fragment">
-    <div th:each="food : ${foods}">
+<!-- Menu/foodListContainer.html -->
+<div xmlns:th="http://www.thymeleaf.org">
+    <div th:each="food : ${foods}" class="food-item">
+        <img th:src="@{${food.image_url}}" alt="Food Image"/>
         <p th:text="${food.name}">Food Name</p>
         <p th:text="${food.price}">Price</p>
-        <img th:src="@{${food.image_url}}" alt="Food Image"/>
+
     </div>
 </div>
-</body>
-</html>
