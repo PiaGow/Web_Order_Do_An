@@ -32,6 +32,14 @@ public class MenuController {
         model.addAttribute("foods", foods);
         return "Menu/index";
     }
+    @GetMapping("/menu/menu")
+    public String showMenu2(Model model) {
+        List<Category> categories = categoryRepository.findAll();
+        List<Food> foods = foodRepository.findAll();
+        model.addAttribute("categories", categories);
+        model.addAttribute("foods", foods);
+        return "Menu/menu";
+    }
 
     @GetMapping("/menu/category/{id}")
     public String showFoodsByCategory(@PathVariable("id") Long id, Model model) {

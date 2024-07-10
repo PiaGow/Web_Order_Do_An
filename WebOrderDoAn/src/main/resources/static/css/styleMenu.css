@@ -154,7 +154,7 @@ a:focus {
 .navbar-brand span {
   font-weight: bold;
   font-size: 32px;
-  color: #ffffff;
+  color: #020202;
 }
 
 .custom_nav-container {
@@ -167,7 +167,7 @@ a:focus {
 
 .custom_nav-container .navbar-nav .nav-item .nav-link {
   padding: 5px 20px;
-  color: #ffffff;
+  color: #020202;
   text-align: center;
   text-transform: uppercase;
   border-radius: 5px;
@@ -228,7 +228,7 @@ a:focus {
 .user_option .cart_link svg {
   width: 17px;
   height: auto;
-  fill: #ffffff;
+  fill: #020202;
   margin-bottom: 2px;
 }
 
@@ -240,7 +240,7 @@ a:focus {
   display: inline-block;
   padding: 8px 30px;
   background-color: #ffbe33;
-  color: #ffffff;
+  color: #020202;
   border-radius: 45px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;

@@ -16,6 +16,7 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
+    @Autowired
     private FoodService foodService;
     @GetMapping
     public String listCategories(Model model) {
@@ -23,7 +24,7 @@ public class CategoryController {
         List<Food> foods = foodService.getAllFoods();
         model.addAttribute("categories", categories);
         model.addAttribute("foods", foods);
-        return "categories";
+        return "categories/list";
     }
 
     @GetMapping("/create")

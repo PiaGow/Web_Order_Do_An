@@ -45,7 +45,7 @@ ul li a:hover {
 
 /* Container for each food item */
 .food-item {
-    width: calc(31.25% - 25px); /* Độ rộng của mỗi box food, tăng 1.25 lần */
+    width: calc(32.25% - 25px); /* Độ rộng của mỗi box food, tăng 1.25 lần */
     display: inline-block;
     margin: 10px;
     padding: 10px;
