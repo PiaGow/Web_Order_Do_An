@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Invoices</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">List of Invoices</h1>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Invoice Date</th>
+            <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="invoice : ${invoices}">
+            <td th:text="${invoice.id}"></td>
+            <td th:text="${#dates.format(invoice.invoiceDate, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${invoice.price}"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr class="table-info">
+            <td colspan="2"><strong>Total</strong></td>
+            <td th:text="${totalSum}"></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"
+        integrity="sha384-jtBvahM0Rt8YyUVgr7sOEwx4kXO13eDJ7tbHg6mTcYh5i5s1iqaw7IbFjF6eu9lF"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+qhS6p6Yl9TKJvaI2L4Ndk"
+        crossorigin="anonymous"></script>
+</body>
+</html>

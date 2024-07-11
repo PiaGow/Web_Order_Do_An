@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice Details</title>
+    <!-- Include any necessary CSS files -->
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Invoice Details</h1>
+<div>
+    <p><strong>ID:</strong> <span th:text="${invoice.id}"></span></p>
+    <p><strong>Invoice Date:</strong> <span th:text="${#dates.format(invoice.invoiceDate, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+    <p><strong>Total:</strong> <span th:text="${invoice.price}"></span></p>
+    <p><strong>User:</strong> <span th:text="${invoice.user.username}"></span></p>
+</div>
+
+<h2>Invoice Items</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Quantity</th>
+        <th>Food</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate through invoice items -->
+    <tr th:each="item : ${invoice.itemInvoices}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.quantity}"></td>
+        <td th:text="${item.food.name}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Optionally, add buttons or links for navigation -->
+<a href="/invoices">Back to Invoices</a>
+</body>
+</html>
