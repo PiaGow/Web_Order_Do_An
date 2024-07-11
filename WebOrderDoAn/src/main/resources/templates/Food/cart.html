@@ -44,10 +44,48 @@
         <div class="col-md-12">
             <h3>Total: <span th:text="${totalPrice}" id="totalPrice"></span></h3>
         </div>
+        <!-- Button triggers the modal -->
         <div class="col-md-12 text-center">
-            <a class="btn btn-success" th:href="@{/cart/checkout}">Checkout</a>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                Checkout
+            </button>
             <a class="btn btn-danger" th:href="@{/cart/clearCart}">Clear Cart</a>
         </div>
+
+        <!-- Payment Modal -->
+        <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paymentModalLabel">Choose Payment Method</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <button id="cashButton" type="button" class="btn btn-primary">Cash</button>
+                        <button id="momoButton" type="button" class="btn btn-secondary">Momo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById("cashButton").addEventListener("click", function() {
+                window.location.href = "/cart/checkout";
+            });
+
+            document.getElementById("momoButton").addEventListener("click", function() {
+                // Calculate total amount dynamically
+                var totalPrice = document.getElementById("totalPrice").innerText;
+                var amount = parseFloat(totalPrice.replace(',', '')); // Assuming totalPrice format is '1,000.00'
+
+                // Redirect to MoMo checkout with amount parameter
+                window.location.href = "/cart/checkout/momo?amount=" + amount;
+            });
+        </script>
+
+        <!-- Include Bootstrap JS (make sure you have included it in your project) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
     </div>
 </div>
 <div class="container" th:if="${#lists.isEmpty(cart.cartItems)}">

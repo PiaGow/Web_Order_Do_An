@@ -1,19 +1,24 @@
 package JAVAC5.com.WebOrderDoAn.Controllers;
 
 import JAVAC5.com.WebOrderDoAn.Services.CartService;
+import JAVAC5.com.WebOrderDoAn.Services.MomoService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/cart")
 @RequiredArgsConstructor
 public class CartController {
+    @Autowired
+    private MomoService momoService;
     private final CartService cartService;
     @GetMapping
     public String showCart(HttpSession session,
@@ -47,4 +52,15 @@ public class CartController {
         cartService.saveCart(session);
         return "redirect:/cart";
     }
-}
+    @GetMapping("/checkout/momo")
+    public String checkoutMomo(@RequestParam("amount") double amount, HttpSession session) {
+        boolean paymentSuccess = momoService.processPayment(amount);
+        if (paymentSuccess) {
+            // Optionally, you may want to save cart details to session or database
+            // For example: cartService.saveCart(session);
+            return "redirect:/cart";
+        } else {
+            return "redirect:/foods";
+        }
+    }
+    }
