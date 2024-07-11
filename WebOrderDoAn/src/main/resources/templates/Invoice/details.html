@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice Details</title>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">Invoice Details</h1>
+    <div class="card">
+        <div class="card-header">
+            Invoice ID: <span th:text="${invoice.id}"></span>
+        </div>
+        <div class="card-body">
+            <p><strong>Invoice Date:</strong> <span th:text="${#dates.format(invoice.invoiceDate, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <p><strong>Total:</strong> <span th:text="${invoice.price}"></span></p>
+            <hr>
+            <h5>Invoice Items</h5>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Food Name</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${invoice.itemInvoices}">
+                    <td th:text="${item.food.name}"></td>
+                    <td th:text="${item.quantity}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <a href="/invoices" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"
+        integrity="sha384-jtBvahM0Rt8YyUVgr7sOEwx4kXO13eDJ7tbHg6mTcYh5i5s1iqaw7IbFjF6eu9lF"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+qhS6p6Yl9TKJvaI2L4Ndk"
+        crossorigin="anonymous"></script>
+</body>
+</html>

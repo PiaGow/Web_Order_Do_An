@@ -39,7 +39,7 @@ public class CategoryService {
     @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = {Exception.class, Throwable.class})
     public void deleteCategoryById(Long categoryId) throws Exception {
         if (foodRepository.countByCategoryId(categoryId) > 0) {
-            throw new Exception("Category cannot be deleted as there are books associated with it.");
+            throw new Exception(getNameById(categoryId)+" cannot be deleted as there are foods associated with it.");
         }
         categoryRepository.deleteById(categoryId);
     }
@@ -49,5 +49,9 @@ public class CategoryService {
 
     public Category findById(Long id) {
         return categoryRepository.findById(id).orElse(null);
+    }
+    public String getNameById(Long id) {
+        Category category = categoryRepository.findById(id).orElse(null);
+        return category != null ? category.getName() : null;
     }
 }

@@ -12,7 +12,7 @@
         th:href="@{/css/style.css}">
 </head>
 <body class="d-flex flex-column h-100">
-<header th:fragment="header">
+<header >
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="/Home">Home</a>
@@ -26,7 +26,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 fa-ul">
           <li class="nav-item"><a class="nav-link" href="/foods">
             <i class="fa-li fa fa-cutlery"></i>Food</a></li>
-          <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/foods/add">Add Food</a></li>
+          <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/foods">Add Food</a></li>
           <li class="nav-item"><a class="nav-link" href="/categories">Category</a></li>
           <li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>
         </ul>

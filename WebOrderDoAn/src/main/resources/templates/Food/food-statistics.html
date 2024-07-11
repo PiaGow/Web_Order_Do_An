@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food's Statistics</title>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::custom-css}"></th:block>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .table img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .btn-back {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .btn-back button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="~{Home/index::header}"></th:block>
+
+<div class="container">
+    <h2>Food's Statistics</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Food Image</th>
+            <th>Food Name</th>
+            <th>Price</th>
+            <th>Total Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stat : ${foodStatistics}">
+            <td><img th:src="@{${stat[3]}}" alt="Food Image"></td>
+            <td th:text="${stat[0]}">Food Name</td>
+            <td th:text="${stat[1]}">Price</td>
+            <td th:text="${stat[2]}">Total Quantity</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="btn-back">
+        <a th:href="@{/foods}" class="btn btn-primary">Back to Foods</a>
+    </div>
+</div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<th:block th:replace="~{Home/index::footer}"></th:block>
+
+</body>
+</html>

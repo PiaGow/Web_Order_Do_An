@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
     <th:block th:replace="~{layout::link-css}"></th:block>
     <th:block th:replace="~{layout::custom-css}"></th:block>
 </head>
 <body>
-<th:block th:replace="~{layout::header}"></th:block>
+<th:block th:replace="~{Home/index::header}"></th:block>
 <div class="container" th:if="${not #lists.isEmpty(cart.cartItems)}">
     <table class="table">
         <thead>
@@ -29,7 +32,6 @@
             <td>
                 <label>
                     <input type="number" min="1" class="form-control quantity" th:value="${item.getQuantity()}" th:attr="data-id=${item.getFoodId()}">
-
                 </label>
             </td>
             <td th:text="${item.getPrice()}" id="Price"></td>
@@ -44,10 +46,56 @@
         <div class="col-md-12">
             <h3>Total: <span th:text="${totalPrice}" id="totalPrice"></span></h3>
         </div>
+        <!-- Button triggers the modal -->
         <div class="col-md-12 text-center">
-            <a class="btn btn-success" th:href="@{/cart/checkout}">Checkout</a>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                Checkout
+            </button>
             <a class="btn btn-danger" th:href="@{/cart/clearCart}">Clear Cart</a>
         </div>
+
+        <!-- Payment Modal -->
+        <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="paymentModalLabel">Choose Payment Method</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <button id="cashButton" type="button" class="btn btn-primary">Cash</button>
+                        <button id="momoButton" type="button" class="btn btn-secondary">Momo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById("cashButton").addEventListener("click", function() {
+                window.location.href = "/cart/checkout";
+            });
+
+            document.getElementById("momoButton").addEventListener("click", function() {
+                var customerName = "John Doe"; // Replace with actual customer name
+                var phoneCustomer = "123456789"; // Replace with actual customer phone number
+                var addressCustomer = "123 Street"; // Replace with actual customer address
+                var emailCustomer = "email@example.com"; // Replace with actual customer email
+                var descriptionOrder = "Description of the order"; // Replace with actual order description
+
+                var totalPrice = document.getElementById("totalPrice").innerText;
+
+                window.location.href = "/payment/create?customerName=" + encodeURIComponent(customerName)
+                    + "&phoneCustomer=" + encodeURIComponent(phoneCustomer)
+                    + "&addressCustomer=" + encodeURIComponent(addressCustomer)
+                    + "&emailCustomer=" + encodeURIComponent(emailCustomer)
+                    + "&descriptionOrder=" + encodeURIComponent(descriptionOrder)
+                    + "&amount=" + encodeURIComponent(totalPrice);
+            });
+        </script>
+
+        <!-- Include Bootstrap JS (make sure you have included it in your project) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
     </div>
 </div>
 <div class="container" th:if="${#lists.isEmpty(cart.cartItems)}">
@@ -55,11 +103,11 @@
         <div class="col-md-6 offset-md-3 text-center">
             <h3 class="mt-5">Your cart is empty</h3>
             <p class="lead">Please add some foods to your cart</p>
-            <a class="btn btn-primary" th:href="@{/foods}">Go to food list</a>
+            <a class="btn btn-primary" th:href="@{/menu/menu}">Go to Menu</a>
         </div>
     </div>
 </div>
-<th:block th:replace="~{layout::footer}"></th:block>
+<th:block th:replace="~{Home/index::footer}"></th:block>
 <script th:src="@{/js/cart.js}"></script>
 </body>
 </html>

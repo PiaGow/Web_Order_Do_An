@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 @Repository
 public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
@@ -13,4 +14,7 @@ public interface IInvoiceRepository extends JpaRepository<Invoice, Long> {
             "FROM Invoice i " +
             "GROUP BY DATE_FORMAT(i.invoiceDate, '%Y-%m')")
     List<Object[]> getMonthlyRevenue();
+    List<Invoice> findByInvoiceDate(Date invoiceDate);
+    List<Invoice> findByInvoiceDateBetween(Date startDate, Date endDate);
+
 }

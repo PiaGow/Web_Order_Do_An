@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Internal Server Error</title>
@@ -7,7 +7,7 @@
     <th:block th:replace="~{layout::custom-css}"></th:block>
 </head>
 <body>
-<th:block th:replace="~{layout::header}"></th:block>
+<th:block th:replace="~{Home/index::header}"></th:block>
 <div class="d-flex align-items-center justify-content-center vh-25">
     <div class="text-center">
         <h1 class="display-1 fw-bold">500</h1>
@@ -22,6 +22,6 @@
         <a href="/" class="btn btn-primary">Back to homepage</a>
     </div>
 </div>
-<th:block th:replace="~{layout::footer}"></th:block>
+<th:block th:replace="~{Home/index::footer}"></th:block>
 </body>
 </html>
