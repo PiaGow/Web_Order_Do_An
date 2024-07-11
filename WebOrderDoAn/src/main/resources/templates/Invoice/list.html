@@ -16,6 +16,7 @@
             <th scope="col">ID</th>
             <th scope="col">Invoice Date</th>
             <th scope="col">Total</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -23,16 +24,21 @@
             <td th:text="${invoice.id}"></td>
             <td th:text="${#dates.format(invoice.invoiceDate, 'dd/MM/yyyy HH:mm')}"></td>
             <td th:text="${invoice.price}"></td>
+            <td>
+                <a th:href="@{/invoices/{id}(id=${invoice.id})}" class="btn btn-info btn-sm" title="View Details">View Details</a>
+            </td>
         </tr>
         </tbody>
         <tfoot>
         <tr class="table-info">
             <td colspan="2"><strong>Total</strong></td>
             <td th:text="${totalSum}"></td>
+            <td></td>
         </tr>
         </tfoot>
     </table>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

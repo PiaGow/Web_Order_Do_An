@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -31,5 +32,17 @@ public class InvoiceController {
         model.addAttribute("totalSum", totalSum);
 
         return "Invoice/list"; // Thymeleaf template name
+    }
+    @GetMapping("/invoices/{id}")
+    public String getInvoiceDetails(@PathVariable Long id, Model model) {
+        Optional<Invoice> optionalInvoice = invoiceService.getInvoiceById(id);
+        if (optionalInvoice.isPresent()) {
+            Invoice invoice = optionalInvoice.get();
+            model.addAttribute("invoice", invoice);
+            return "Invoice/details"; // Thymeleaf template name for invoice details
+        } else {
+            // Handle case when invoice is not found
+            return "redirect:/invoices"; // Redirect to list page or error page
+        }
     }
 }
