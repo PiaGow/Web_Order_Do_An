@@ -30,7 +30,7 @@ public class CategoryController {
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("category", new Category());
-        return "categories/create";
+        return "Categories/create";
     }
 
     @PostMapping("/create")

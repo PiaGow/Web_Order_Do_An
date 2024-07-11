@@ -47,10 +47,13 @@ public class SecurityConfig {
                 csrf -> csrf.ignoringRequestMatchers("/api/v1/books/**")
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/Home",
+                        .requestMatchers("/css/**", "/js/**", "/Home/index",
                                 "/oauth/**", "/register", "/error")
                         .permitAll()
-
+                        .requestMatchers("/categories/create","categories/edit/**","categories/delete/**")
+                        .hasAnyAuthority("ADMIN")
+                        .requestMatchers("/foods/add","/foods/edit/**","/foods/delete/**")
+                        .hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 ).logout(logout -> logout
                         .logoutUrl("/logout")
@@ -90,7 +93,7 @@ public class SecurityConfig {
                         .userDetailsService(userDetailsService())
                 ).exceptionHandling(exceptionHandling ->
                         exceptionHandling
-                                .accessDeniedPage("/403")
+                                .accessDeniedPage("/error/403")
                 ).sessionManagement(sessionManagement ->
                         sessionManagement
                                 .maximumSessions(1)
