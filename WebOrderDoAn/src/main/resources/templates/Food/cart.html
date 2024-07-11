@@ -9,7 +9,7 @@
     <th:block th:replace="~{layout::custom-css}"></th:block>
 </head>
 <body>
-<th:block th:replace="~{layout::header}"></th:block>
+<th:block th:replace="~{Home/index::header}"></th:block>
 <div class="container" th:if="${not #lists.isEmpty(cart.cartItems)}">
     <table class="table">
         <thead>
@@ -97,7 +97,7 @@
         </div>
     </div>
 </div>
-<th:block th:replace="~{layout::footer}"></th:block>
+<th:block th:replace="~{Home/index::footer}"></th:block>
 <script th:src="@{/js/cart.js}"></script>
 </body>
 </html>

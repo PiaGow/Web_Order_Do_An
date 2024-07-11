@@ -8,7 +8,7 @@
 <!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->
 </head>
 <body>
-<th:block th:replace="~{layout::header}"></th:block>
+<th:block th:replace="~{Home/index::header}"></th:block>
 <div class="container">
     <h1>Thêm danh mục mới</h1>
     <form th:action="@{/categories/create}" method="post">
@@ -20,6 +20,6 @@
     </form>
     <a th:href="@{/categories}">Back to Category</a>
 </div>
-<th:block th:replace="~{layout::footer}"></th:block>
+<th:block th:replace="~{Home/index::footer}"></th:block>
 </body>
 </html>

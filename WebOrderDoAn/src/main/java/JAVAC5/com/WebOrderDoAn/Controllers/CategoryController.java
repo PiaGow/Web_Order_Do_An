@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class CategoryController {
         List<Food> foods = foodService.getAllFoods();
         model.addAttribute("categories", categories);
         model.addAttribute("foods", foods);
-        return "categories/list";
+        return "Categories/list";
     }
 
     @GetMapping("/create")
@@ -46,7 +47,7 @@ public class CategoryController {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + id));
         model.addAttribute("category", category);
-        return "categories/edit";
+        return "Categories/edit";
     }
 
     @PostMapping("/edit/{id}")
@@ -57,19 +58,24 @@ public class CategoryController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteCategory(@PathVariable Long id) throws Exception {
-        categoryService.deleteCategoryById(id);
+    public String deleteCategory(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            categoryService.deleteCategoryById(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/categories?error";
+        }
         return "redirect:/categories";
     }
-    @GetMapping("/byCategory/{categoryId}")
-    public String getFoodsByCategory(@PathVariable Long categoryId, Model model) {
-        Category category = categoryService.getCategoryById(categoryId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + categoryId));
-        List<Food> foods = foodService.getFoodsByCategoryId(categoryId);
-        model.addAttribute("category", category);
-        model.addAttribute("foods", foods);
-        return "foodList"; // Thay thế bằng tên template của bạn
-    }
+//    @GetMapping("/byCategory/{categoryId}")
+//    public String getFoodsByCategory(@PathVariable Long categoryId, Model model) {
+//        Category category = categoryService.getCategoryById(categoryId)
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + categoryId));
+//        List<Food> foods = foodService.getFoodsByCategoryId(categoryId);
+//        model.addAttribute("category", category);
+//        model.addAttribute("foods", foods);
+//        return "foodList"; // Thay thế bằng tên template của bạn
+//    }
     @GetMapping("/by-category/{categoryId}")
     @ResponseBody
     public ResponseEntity<List<Food>> getFoodsByCategory(@PathVariable Long categoryId) {

@@ -9,7 +9,7 @@
     <title>Add Book</title>
 </head>
 <body>
-<th:block th:replace="~{layout::header}"></th:block>
+<th:block th:replace="~{Home/index::header}"></th:block>
 <div class="container">
     <h1>Add Food</h1>
     <form th:action="@{/foods/add}" th:object="${food}" method="post" enctype="multipart/form-data">
@@ -54,7 +54,7 @@
     <a class="btn btn-check" th:href="@{/books}">Back to List</a>
 </div>
 
-<th:block th:replace="~{layout::footer}"></th:block>
+<th:block th:replace="~{Home/index::footer}"></th:block>
 
 </body>
 </html>

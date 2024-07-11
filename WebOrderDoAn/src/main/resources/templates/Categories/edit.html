@@ -8,7 +8,7 @@
 <!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->
 </head>
 <body>
-<th:block th:replace="~{layout::header}"></th:block>
+<th:block th:replace="~{Home/index::header}"></th:block>
 <div class="container">
     <h1>Sửa danh mục</h1>
     <form th:action="@{/categories/edit/{id}(id=${category.id})}" method="post">
@@ -19,6 +19,6 @@
         <button type="submit" class="btn btn-primary">Lưu</button>
     </form>
 </div>
-<th:block th:replace="~{layout::footer}"></th:block>
+<th:block th:replace="~{Home/index::footer}"></th:block>
 </body>
 </html>

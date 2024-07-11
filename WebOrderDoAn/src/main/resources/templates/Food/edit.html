@@ -9,7 +9,7 @@
     <title>Edit Food</title>
 </head>
 <body>
-<th:block th:replace="~{layout::header}"></th:block>
+<th:block th:replace="~{Home/index::header}"></th:block>
 <div class="container">
     <h1>Edit Book</h1>
     <form th:action="@{/foods/edit}"  th:object="${food}" enctype="multipart/form-data"  method="POST" >
@@ -42,6 +42,6 @@
     <br>
     <a class="btn btn-primary" th:href="@{/foods}">Back to List</a>
 </div>
-<th:block th:replace="~{layout::footer}"></th:block>
+<th:block th:replace="~{Home/index::footer}"></th:block>
 </body>
 </html>
