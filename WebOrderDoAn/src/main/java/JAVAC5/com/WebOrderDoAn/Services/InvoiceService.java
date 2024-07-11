@@ -5,6 +5,8 @@ import JAVAC5.com.WebOrderDoAn.Repositories.IInvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,5 +29,11 @@ public class InvoiceService {
     }
     public Optional<Invoice> getInvoiceById(Long id) {
         return invoiceRepository.findById(id);
+    }
+    public List<Invoice> getInvoicesByInvoiceDate(Date invoiceDate) {
+        return invoiceRepository.findByInvoiceDate(invoiceDate);
+    }
+    public List<Invoice> getInvoicesBetweenDates(Date startDate, Date endDate) {
+        return invoiceRepository.findByInvoiceDateBetween(startDate, endDate);
     }
 }

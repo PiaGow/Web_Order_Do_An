@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revenue Details</title>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<th:block th:replace="~{layout::link-css}"></th:block>
+<th:block th:replace="~{layout::custom-css}"></th:block>
 <div class="container">
     <h2 class="text-center">Revenue Details</h2>
     <div class="row">
@@ -33,5 +38,7 @@
         </div>
     </div>
 </div>
+<th:block th:replace="~{Home/index::footer}"></th:block>
+
 </body>
 </html>
