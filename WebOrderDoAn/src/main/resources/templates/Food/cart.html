@@ -29,7 +29,6 @@
             <td>
                 <label>
                     <input type="number" min="1" class="form-control quantity" th:value="${item.getQuantity()}" th:attr="data-id=${item.getFoodId()}">
-
                 </label>
             </td>
             <td th:text="${item.getPrice()}" id="Price"></td>
@@ -74,12 +73,20 @@
             });
 
             document.getElementById("momoButton").addEventListener("click", function() {
-                // Calculate total amount dynamically
-                var totalPrice = document.getElementById("totalPrice").innerText;
-                var amount = parseFloat(totalPrice.replace(',', '')); // Assuming totalPrice format is '1,000.00'
+                var customerName = "John Doe"; // Replace with actual customer name
+                var phoneCustomer = "123456789"; // Replace with actual customer phone number
+                var addressCustomer = "123 Street"; // Replace with actual customer address
+                var emailCustomer = "email@example.com"; // Replace with actual customer email
+                var descriptionOrder = "Description of the order"; // Replace with actual order description
 
-                // Redirect to MoMo checkout with amount parameter
-                window.location.href = "/cart/checkout/momo?amount=" + amount;
+                var totalPrice = document.getElementById("totalPrice").innerText;
+
+                window.location.href = "/payment/create?customerName=" + encodeURIComponent(customerName)
+                    + "&phoneCustomer=" + encodeURIComponent(phoneCustomer)
+                    + "&addressCustomer=" + encodeURIComponent(addressCustomer)
+                    + "&emailCustomer=" + encodeURIComponent(emailCustomer)
+                    + "&descriptionOrder=" + encodeURIComponent(descriptionOrder)
+                    + "&amount=" + encodeURIComponent(totalPrice);
             });
         </script>
 
@@ -93,7 +100,7 @@
         <div class="col-md-6 offset-md-3 text-center">
             <h3 class="mt-5">Your cart is empty</h3>
             <p class="lead">Please add some foods to your cart</p>
-            <a class="btn btn-primary" th:href="@{/foods}">Go to food list</a>
+            <a class="btn btn-primary" th:href="@{/menu/menu}">Go to Menu</a>
         </div>
     </div>
 </div>

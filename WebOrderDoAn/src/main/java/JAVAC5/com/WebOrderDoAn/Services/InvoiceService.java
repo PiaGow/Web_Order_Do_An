@@ -1,2 +1,8 @@
-package JAVAC5.com.WebOrderDoAn.Services;public class InvoiceService {
+package JAVAC5.com.WebOrderDoAn.Services;
+
+import org.springframework.stereotype.Service;
+
+@Service
+
+public class InvoiceService {
 }

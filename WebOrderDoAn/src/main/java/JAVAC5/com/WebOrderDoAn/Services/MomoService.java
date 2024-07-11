@@ -2,126 +2,130 @@ package JAVAC5.com.WebOrderDoAn.Services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import jakarta.servlet.http.HttpSession;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+
 
 @Service
 public class MomoService {
 
-    private static final String MOMO_ENDPOINT = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
-    private static final String PARTNER_CODE = "MOMO5RGX20191128";
-    private static final String ACCESS_KEY = "M8brj9K6E22vXoDB";
-    private static final String SECRET_KEY = "nqQiVSgDMy809JoPF6OzP5OdBUB550Y4";
-    private static final String RETURN_URL = "http://localhost:8080/cart";
-    private static final String NOTIFY_URL = "http://localhost:8080/cart";
+    @Autowired
+    private CartService cartService;
 
+    @Autowired
+    private InvoiceService orderService;
 
-    public boolean processPayment(double amount) {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Content-Type", "application/json");
+    private final String endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+    private final String partnerCode = "MOMOOJOI20210710";
+    private final String accessKey = "iPXneGmrJH0G8FOP";
+    private final String serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
+    private final String returnUrl = "http://localhost:8080/cart";
+    private final String notifyUrl = "https://8e37-125-235-208-163.ngrok-free.app/payment/notify";
 
-            // Create request body
-            String requestBody = createMomoRequestBody(amount);
+    public String createPayment(HttpSession session, String customerName, String phoneCustomer, String addressCustomer, String emailCustomer, String descriptionOrder) throws Exception {
+        // Calculate total price
+        double totalPrice = cartService.getSumPrice(session);
+        double finalPrice = totalPrice;
+        String amount = String.valueOf((int) finalPrice); // Convert total price to string and ensure it is an integer
 
-            HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
-            ResponseEntity<String> response = restTemplate.exchange(MOMO_ENDPOINT, HttpMethod.POST, entity, String.class);
+        // Generate orderId and requestId
+        String orderId = String.valueOf(System.currentTimeMillis());
+        String requestId = orderId;
+        String orderInfo = "Payment for order " + orderId;
+        String extraData = "";
 
-            // Handle response from Momo
-            if (response.getStatusCode().is2xxSuccessful()) {
-                return handleMomoResponse(response.getBody());
-            } else {
-                // Handle error calling Momo API, e.g., log error and return false
-                System.err.println("Failed to call Momo API: " + response.getStatusCode());
-                return false;
-            }
+        // Create raw hash string
+        String rawHash = "partnerCode=" + partnerCode +
+                "&accessKey=" + accessKey +
+                "&requestId=" + requestId +
+                "&amount=" + amount +
+                "&orderId=" + orderId +
+                "&orderInfo=" + orderInfo +
+                "&returnUrl=" + returnUrl +
+                "&notifyUrl=" + notifyUrl +
+                "&extraData=" + extraData;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    private String createMomoRequestBody(double amount) {
-        String orderId = UUID.randomUUID().toString();
-        String requestId = UUID.randomUUID().toString();
-
-        // Raw signature string
-        String rawSignature = String.format(
-                "accessKey=%s&amount=%.2f&extraData=&ipnUrl=%s&orderId=%s&orderInfo=%s&partnerCode=%s&redirectUrl=%s&requestId=%s&requestType=captureWallet",
-                ACCESS_KEY, amount, NOTIFY_URL, orderId, "Payment with MoMo", PARTNER_CODE, RETURN_URL, requestId);
-
-        // Generate the signature
-        String signature = signHmacSHA256(rawSignature, SECRET_KEY);
+        // Sign the raw hash string
+        String signature = signSHA256(rawHash, serectkey);
 
         // Create request body
-        Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("partnerCode", PARTNER_CODE);
-        requestBody.put("accessKey", ACCESS_KEY);
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("partnerCode", partnerCode);
+        requestBody.put("accessKey", accessKey);
         requestBody.put("requestId", requestId);
         requestBody.put("amount", amount);
         requestBody.put("orderId", orderId);
-        requestBody.put("orderInfo", "Payment with MoMo");
-        requestBody.put("returnUrl", RETURN_URL);
-        requestBody.put("notifyUrl", NOTIFY_URL);
-        requestBody.put("extraData", "");
-        requestBody.put("requestType", "captureWallet");
+        requestBody.put("orderInfo", orderInfo);
+        requestBody.put("returnUrl", returnUrl);
+        requestBody.put("notifyUrl", notifyUrl);
+        requestBody.put("extraData", extraData);
+        requestBody.put("requestType", "captureMoMoWallet");
         requestBody.put("signature", signature);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(requestBody);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error while creating JSON request body for Momo API", e);
-        }
+        // Send payment request
+        String response = sendPaymentRequest(endpoint, requestBody);
+        Map<String, Object> responseMap = new ObjectMapper().readValue(response, Map.class);
+
+        // Save order details
+        // cartService.saveCart();
+
+        // Clear cart after order placement
+        // cartService.removeCart();
+
+        // Return payUrl for redirection
+        return responseMap.get("payUrl").toString();
     }
 
-    private String signHmacSHA256(String data, String key) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hmac = digest.digest(key.getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder().encodeToString(hmac);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            throw new RuntimeException("SHA-256 algorithm not available", e);
-        }
-    }
-
-    private boolean handleMomoResponse(String responseBody) {
-        // Handle response from Momo API
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
-
-            // Check payment status from Momo
-            if ("0".equals(responseMap.get("errorCode").toString())) {
-                // Payment successful
-                return true;
-            } else {
-                // Payment failed, handle other cases
-                System.err.println("Momo payment failed: " + responseMap.get("message"));
-                return false;
+    private String signSHA256(String message, String key) throws Exception {
+        Mac sha256HMAC = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        sha256HMAC.init(secretKey);
+        byte[] hash = sha256HMAC.doFinal(message.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            hexString.append(hex);
         }
+        return hexString.toString();
     }
 
+    private String sendPaymentRequest(String endpoint, Map<String, String> requestBody) throws Exception {
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(endpoint);
+
+        String json = new ObjectMapper().writeValueAsString(requestBody);
+        StringEntity entity = new StringEntity(json);
+        httpPost.setEntity(entity);
+        httpPost.setHeader("Accept", "application/json");
+        httpPost.setHeader("Content-type", "application/json");
+
+        return EntityUtils.toString(client.execute(httpPost).getEntity());
+    }
 }

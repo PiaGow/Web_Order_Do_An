@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/cart")
@@ -53,14 +54,22 @@ public class CartController {
         return "redirect:/cart";
     }
     @GetMapping("/checkout/momo")
-    public String checkoutMomo(@RequestParam("amount") double amount, HttpSession session) {
-        boolean paymentSuccess = momoService.processPayment(amount);
-        if (paymentSuccess) {
-            // Optionally, you may want to save cart details to session or database
-            // For example: cartService.saveCart(session);
-            return "redirect:/cart";
-        } else {
-            return "redirect:/foods";
+    public String checkoutMomo(HttpSession session, Model model) {
+        try {
+            String customerName = "John Doe"; // Replace with actual customer name
+            String phoneCustomer = "123456789"; // Replace with actual customer phone number
+            String addressCustomer = "123 Street"; // Replace with actual customer address
+            String emailCustomer = "email@example.com"; // Replace with actual customer email
+            String descriptionOrder = "Description of the order"; // Replace with actual order description
+
+            String payUrl = momoService.createPayment(session, customerName, phoneCustomer, addressCustomer, emailCustomer, descriptionOrder);
+            return "redirect:" + payUrl;
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "Error occurred: " + e.getMessage());
+            return "error";
         }
     }
     }
+
+
