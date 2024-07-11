@@ -1,0 +1,109 @@
+/* Reset và thiết lập cơ bản */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1, h2 {
+    color: #333;
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+ul li a:hover {
+    color: #0056b3;
+}
+
+/* Phần food list */
+#food-list {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Mỗi food item */
+/* styles.css */
+
+/* Container for each food item */
+.food-item {
+    width: calc(32.25% - 25px); /* Độ rộng của mỗi box food, tăng 1.25 lần */
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Đảm bảo hiển thị luôn 4 box trên một hàng */
+@media (max-width: 1200px) {
+    .food-item {
+        width: calc(31.25% - 25px); /* 4 box trên một hàng */
+    }
+}
+
+@media (max-width: 992px) {
+    .food-item {
+        width: calc(31.25% - 25px); /* 4 box trên một hàng */
+    }
+}
+
+@media (max-width: 768px) {
+    .food-item {
+        width: calc(31.25% - 25px); /* 4 box trên một hàng */
+    }
+}
+
+@media (max-width: 480px) {
+    .food-item {
+        width: calc(100% - 20px); /* 1 box trên một hàng */
+    }
+}
+
+
+/* Hiệu ứng button trong filters menu */
+.filters_menu a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    color: #000; /* Màu chữ mặc định */
+    text-decoration: none;
+    border-radius: 25px;
+    background-color: transparent; /* Background mặc định là trong suốt */
+    transition: background-color 0.3s, transform 0.3s; /* Transition cho hiệu ứng */
+}
+
+/* Hiệu ứng khi active */
+.filters_menu a.active {
+    background-color: #000; /* Màu nền cho button active */
+    color: #fff; /* Màu chữ cho button active */
+    transform: scale(1.05); /* Hiệu ứng scale */
+}
+
+/* Định dạng ảnh trong food item */
+.food-item img {
+    max-width: 100%; /* Ảnh tự động điều chỉnh kích thước theo chiều rộng của box */
+    height: auto; /* Đảm bảo tỷ lệ hình ảnh không bị méo */
+    display: block; /* Đảm bảo ảnh hiển thị dưới dạng block để tránh khoảng trống dư thừa */
+    margin: 0 auto; /* Căn giữa ảnh trong box */
+    max-height: 150px; /* Chiều cao tối đa của ảnh */
+}
