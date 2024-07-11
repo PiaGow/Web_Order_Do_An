@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +17,7 @@
 <body>
 <th:block th:replace="~{Home/index::header}"></th:block>
 <div class="container">
-    <h1>Edit Book</h1>
+    <h1>Edit Food</h1>
     <form th:action="@{/foods/edit}"  th:object="${food}" enctype="multipart/form-data"  method="POST" >
         <input type="hidden" th:field="*{id}">
 
@@ -36,7 +38,7 @@
             </select>
         </div>
         <div class="col-6 mb-3">
-            <label class="form-label" for="image_url">Book Image:</label>
+            <label class="form-label" for="image_url">Food Image:</label>
             <input class="form-control" type="file" name="image">
             <input type="hidden" th:field="*{image_url}">
             <input class="form-control" type="image" disabled="disabled" th:src="*{image_url}" alt="" id="image_url">
