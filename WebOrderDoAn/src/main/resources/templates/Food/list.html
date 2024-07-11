@@ -32,6 +32,10 @@
         <div class="col-md-12">
             <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary mb-3" th:href="@{/foods/add}">Add Food</a>
         </div>
+
+        <div class="col-md-12">
+            <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary mb-3" th:href="@{/foods/food-statistics}">Food's Statistics</a>
+        </div>
     </div>
     <table class="table">
         <thead>

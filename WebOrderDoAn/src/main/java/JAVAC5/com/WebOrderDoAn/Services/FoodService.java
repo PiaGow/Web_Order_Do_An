@@ -4,8 +4,10 @@ import JAVAC5.com.WebOrderDoAn.Entities.Category;
 import JAVAC5.com.WebOrderDoAn.Entities.Food;
 import JAVAC5.com.WebOrderDoAn.Repositories.ICategoryRepository;
 import JAVAC5.com.WebOrderDoAn.Repositories.IFoodRepository;
+import JAVAC5.com.WebOrderDoAn.Repositories.IInvoiceItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -83,4 +85,12 @@ public class FoodService {
     public List<Food> findByCategory(Category category) {
         return foodRepository.findByCategory(category);
     }
+
+    @Autowired
+    private IInvoiceItemRepository invoiceItemRepository;
+
+    public List<Object[]> getFoodStatistics() {
+        return invoiceItemRepository.findFoodStatistics();
+    }
+
 }

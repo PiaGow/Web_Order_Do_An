@@ -216,4 +216,11 @@ public class FoodController {
         return "fragments/foodList :: foodList"; // Ensure fragment name matches HTML
     }
 
+    @GetMapping("/food-statistics")
+    public String showFoodStatistics(Model model) {
+        List<Object[]> foodStatistics = foodService.getFoodStatistics();
+        model.addAttribute("foodStatistics", foodStatistics);
+        return "Food/food-statistics";
+    }
+
 }
