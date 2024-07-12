@@ -49,7 +49,12 @@ public class MenuController {
         model.addAttribute("foods", foods);
         return "Menu/menu";
     }
-
+    @GetMapping("/random")
+    public String randomMenu(Model model) {
+        List<Food> foods = foodRepository.findAll();
+        model.addAttribute("foods", foods);
+        return "Menu/random";
+    }
     @GetMapping("/category/{id}")
     public String showFoodsByCategory(@PathVariable("id") Long id, Model model) {
         Category category = categoryRepository.findById(id).orElse(null);

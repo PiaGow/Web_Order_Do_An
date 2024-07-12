@@ -47,7 +47,7 @@ public class SecurityConfig {
                 csrf -> csrf.ignoringRequestMatchers("/api/v1/books/**")
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/Home",
+                        .requestMatchers("/css/**", "/js/**",
                                 "/oauth/**", "/register", "/error")
                         .permitAll()
                         .requestMatchers("/categories/create","categories/edit/**","categories/delete/**")

@@ -21,12 +21,12 @@ public class UserController {
     private final UserService userService;
     @GetMapping("/login")
     public String login() {
-        return "User/login";
+        return "user/login";
     }
     @GetMapping("/register")
     public String register(@NotNull Model model) {
         model.addAttribute("user", new User());
-        return "User/register";
+        return "user/register";
     }
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user,
@@ -38,7 +38,7 @@ public class UserController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .toArray(String[]::new);
             model.addAttribute("errors", errors);
-            return "User/register";
+            return "user/register";
         }
         userService.save(user);
         userService.setDefaultRole(user.getUsername());

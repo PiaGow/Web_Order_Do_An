@@ -17,19 +17,19 @@
     <title> Let Him Cook </title>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
 
     <!--owl slider stylesheet -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <!-- nice select  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
     <!-- font awesome style -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
     <!-- responsive style -->
-    <link href="css/responsive.css" rel="stylesheet" />
+    <link href="/css/responsive.css" rel="stylesheet" />
 
 </head>
 
@@ -64,14 +64,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="">About</a>
                         </li>
-                        <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/foods">Add Food</a></li>
+                        <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/foods">Food</a></li>
                         <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/categories">Category</a></li>
                         <li sec:authorize="hasAnyAuthority('ADMIN')" class="nav-item"><a class="nav-link" href="/revenue/index">Revenue</a></li>
                     </ul>
                     <div class="user_option">
-                        <a href="" class="user_link">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                        </a>
+                        <div sec:authorize="isAuthenticated()" class="user_link">
+                            <form th:action="@{/logout}" method="post" class="d-flex">
+                                <button class="btn btn-outline-danger" type="submit">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div sec:authorize="!isAuthenticated()" class="user_link">
+                            <a href="/login" class="user_link">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </a>
+                        </div>
                         <a class="cart_link" href="/cart">
                             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                   <g>
